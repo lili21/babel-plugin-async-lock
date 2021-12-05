@@ -1,6 +1,22 @@
 # babel plugin for async lock
 
 Prevent unnecessary click callback trigger by fast click. Especcily for async callback, like requesting backend API.
+
+## Installation
+
+```
+npm i babel-plugin-async-lock
+```
+
+## Usage
+
+```js
+// your babel config
+module.exports = {
+  plugins: ['babel-plugin-async-lock']
+}
+```
+
 ## Why
 
 ```jsx
