@@ -16,6 +16,7 @@ function _lock$(fn) {
       locking = false;
     }
   };
+
   return _lockedFn$;
 }
 `
@@ -27,9 +28,10 @@ function asyncLockPlugin({ types: t, parse }) {
         path.node.body.unshift(parse(lock).program.body[0]);
       },
       'ArrowFunctionExpression|FunctionExpression': (path) => {
+        // handle async function
         if (!path.node.async) return;
-        if (path.parentPath.isCallExpression()) return;
-        if (path.parentPath.node.id.name === '_lockedFn$') return;
+        if (path.parentPath.get('callee').isIdentifier({ name: '_lock$' })) return;
+        if (path.findParent(p => p.get('id').isIdentifier({ name: '_lockedFn$' }))) return;
 
         const newNode = t.callExpression(t.identifier('_lock$'), [path.node])
         path.replaceWith(newNode)
@@ -40,6 +42,15 @@ function asyncLockPlugin({ types: t, parse }) {
             t.variableDeclarator(path.node.id, t.functionExpression(null, path.node.params, path.node.body, path.node.generator, path.node.async))
           ])
           path.replaceWith(newNode);
+        }
+      },
+      CallExpression(path) {
+        // handle conflict with async-to-generator
+        if (path.parentPath.get('callee').isIdentifier({ name: '_lock$' })) return;
+        if (path.findParent(p => p.get('id').isIdentifier({ name: '_lockedFn$' }))) return;
+        if (path.get('callee').isIdentifier({ name: '_asyncToGenerator'})) {
+          const newNode = t.callExpression(t.identifier('_lock$'), [path.node])
+          path.replaceWith(newNode)
         }
       }
     }

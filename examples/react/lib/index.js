@@ -44,14 +44,14 @@ function App() {
   const [count, setCount] = React.useState(0);
 
   const onClick = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(function* () {
+    var _ref2 = _lock$(_asyncToGenerator(function* () {
       console.log('hehhehe');
       yield sleep(1);
       console.log('sleeee');
       yield sleep(2);
       console.log('hhh');
       setCount(c => c + 1);
-    });
+    }));
 
     return function onClick() {
       return _ref2.apply(this, arguments);
@@ -63,11 +63,11 @@ function App() {
   }
 
   function _onClick() {
-    _onClick = _asyncToGenerator(function* () {
+    _onClick = _lock$(_asyncToGenerator(function* () {
       console.log('hehhehe');
       yield sleep(1);
       setCount(c => c + 1);
-    });
+    }));
     return _onClick.apply(this, arguments);
   }
 
