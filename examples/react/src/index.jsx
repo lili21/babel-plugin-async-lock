@@ -16,6 +16,7 @@ function App() {
     await sleep(2)
     console.log('hhh')
     setCount(c => c +1)
+    return '123';
   }
 
   async function onClick2() {

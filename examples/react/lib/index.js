@@ -3,8 +3,6 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _lock$(fn) {
-  var _this = this;
-
   let locking = false;
 
   const _lockedFn$ = /*#__PURE__*/function () {
@@ -15,7 +13,8 @@ function _lock$(fn) {
 
       try {
         locking = true;
-        yield fn.apply(_this, args);
+        const r = yield fn.apply(this, args);
+        return r;
       } catch (e) {
         throw e;
       } finally {
@@ -51,6 +50,7 @@ function App() {
       yield sleep(2);
       console.log('hhh');
       setCount(c => c + 1);
+      return '123';
     }));
 
     return function onClick() {

@@ -2,14 +2,15 @@ const lock = `
 function _lock$(fn) {
   let locking = false;
 
-  const _lockedFn$ = async (...args) => {
+  const _lockedFn$ = async function (...args) {
     if (locking) {
       return;
     }
 
     try {
       locking = true;
-      await fn.apply(this, args);
+      const r = await fn.apply(this, args);
+      return r;
     } catch (e) {
       throw e;
     } finally {
@@ -37,7 +38,7 @@ function asyncLockPlugin({ types: t, parse }) {
         path.replaceWith(newNode)
       },
       FunctionDeclaration(path) {
-        if (path.node.async) {
+        if (path.node.async && !path.parentPath.isProgram()) {
           const newNode = t.variableDeclaration('const', [
             t.variableDeclarator(path.node.id, t.functionExpression(null, path.node.params, path.node.body, path.node.generator, path.node.async))
           ])

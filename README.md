@@ -37,3 +37,10 @@ While we fetching `api`, User can still click the button, and trigger the new fe
 ## What the plugin do
 
 it will transform the code, automaticlly add a locker to every async function
+
+## TODO
+
+[] Support exclude option
+## Knowing Issue
+
+* Does't support `Class method` yet
