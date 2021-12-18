@@ -6,5 +6,9 @@ module.exports = {
 
     '@babel/preset-react'
   ],
-  plugins: [asyncLockPlugin]
+  plugins: [
+    [asyncLockPlugin, {
+      exclude: 'service'
+    }]
+  ]
 }

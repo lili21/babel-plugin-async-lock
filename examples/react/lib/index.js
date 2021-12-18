@@ -22,6 +22,7 @@ function _lock$(fn) {
 
 import React from 'react';
 import ReactDom from 'react-dom';
+import { test } from './service.js';
 
 const sleep = (t = 1) => {
   return new Promise(resolve => {
@@ -30,13 +31,11 @@ const sleep = (t = 1) => {
 };
 
 class Button extends React.Component {
-  // onClick() {
-  //   return _lock$(async () => {
-  //     console.log('async class method');
-  //     await sleep(1);
-  //     this.props.onClick();
-  //   })();
-  // }
+  async onClick() {
+    console.log('async class method');
+    await sleep(1);
+    this.props.onClick();
+  }
 
   render() {
     return /*#__PURE__*/React.createElement("button", {
@@ -45,12 +44,6 @@ class Button extends React.Component {
   }
 
 }
-
-Button.prototype.onClick = _lock$(async function() {
-  console.log('async class method');
-  await sleep(1);
-  this.props.onClick();
-})
 
 function App() {
   const [count, setCount] = React.useState(0);

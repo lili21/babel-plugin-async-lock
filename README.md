@@ -13,9 +13,19 @@ npm i babel-plugin-async-lock
 ```js
 // your babel config
 module.exports = {
-  plugins: ['babel-plugin-async-lock']
+  plugins: [
+    'babel-plugin-async-lock',
+    {
+      exclude: 'node_modules'
+    }
+  ]
 }
 ```
+
+## Options
+
+
+
 
 ## Why
 
@@ -38,9 +48,7 @@ While we fetching `api`, User can still click the button, and trigger the new fe
 
 it will transform the code, automaticlly add a locker to every async function
 
-## TODO
 
-[] Support exclude option
 ## Knowing Issue
 
 * Does't support `Class method` yet
