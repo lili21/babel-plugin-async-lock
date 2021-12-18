@@ -53,7 +53,25 @@ function asyncLockPlugin({ types: t, parse }) {
           const newNode = t.callExpression(t.identifier('_lock$'), [path.node])
           path.replaceWith(newNode)
         }
-      }
+      },
+      // 需要改写成原型的模式支持 - 暂不支持
+      // ClassMethod(path) {
+      //   if (!path.node.async) return;
+      //   const body = t.blockStatement([
+      //     t.returnStatement(
+      //       t.callExpression(
+      //         t.callExpression(
+      //           t.identifier('_lock$'),
+      //           [t.arrowFunctionExpression([], path.node.body, true)]
+      //         ),
+      //         []
+      //       )
+      //     )
+      //   ])
+      //   const newNode = t.classMethod('method', path.node.key, path.get('params'), body)
+      //   path.replaceWith(newNode);
+      //   path.skip();
+      // }
     }
   }
 }

@@ -6,5 +6,5 @@ module.exports = {
 
     '@babel/preset-react'
   ],
-  plugins: ['@babel/plugin-transform-async-to-generator', asyncLockPlugin]
+  plugins: [asyncLockPlugin]
 }
