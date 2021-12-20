@@ -16,7 +16,8 @@ module.exports = {
   plugins: [
     'babel-plugin-async-lock',
     {
-      exclude: 'node_modules'
+      exclude: 'node_modules',
+      extensions: ['.jsx', '.tsx']
     }
   ]
 }
@@ -24,7 +25,8 @@ module.exports = {
 
 ## Options
 
-
+* `exclude`
+* `extensions`
 
 
 ## Why

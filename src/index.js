@@ -1,4 +1,5 @@
 const t = require('@babel/types')
+const { extname } = require('path')
 const lock = `
 function _lock$(fn) {
   let locking = false;
@@ -75,10 +76,16 @@ function asyncLockPlugin ({ types: t, parse }) {
     visitor: {
       Program (path, stats) {
         const filename = stats.file.opts.filename
-        const exclude = stats.opts.exclude
-        if (exclude && filename.match(new RegExp(exclude))) {
+        const exclude = stats.opts.exclude || 'node_modules'
+        const extensions = stats.opts.extensions || ['.jsx', '.tsx']
+        if (filename.match(new RegExp(exclude))) {
           return
         }
+
+        if (!extensions.includes(extname(filename))) {
+          return
+        }
+
         path.node.body.unshift(parse(lock).program.body[0])
         path.traverse(visitor)
       }
