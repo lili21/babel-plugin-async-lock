@@ -22,7 +22,7 @@ function _lock$(fn) {
 
 import React from 'react';
 import ReactDom from 'react-dom';
-import { test } from './service.js';
+import { checkDeliverFirstLoginStatus, checkDeliverFirstLoginStatus2 } from './service.js';
 
 const sleep = (t = 1) => {
   return new Promise(resolve => {
@@ -54,6 +54,15 @@ function App() {
     setCount(c => c + 1);
   });
 
+  checkDeliverFirstLoginStatus2();
+  React.useEffect(() => {
+    const init = _lock$(async () => {
+      const data = await checkDeliverFirstLoginStatus();
+      console.log('-----data', data);
+    });
+
+    init();
+  }, []);
   return /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h1", null, "Hello, React World"), /*#__PURE__*/React.createElement("p", null, count), /*#__PURE__*/React.createElement("button", {
     onClick: onClick
   }, "function support"), /*#__PURE__*/React.createElement(Button, {

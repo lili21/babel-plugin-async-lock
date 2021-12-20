@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import { test } from './service.js';
+import { checkDeliverFirstLoginStatus, checkDeliverFirstLoginStatus2 } from './service.js';
 
 const sleep = (t = 1) => {
   return new Promise(resolve => {
@@ -27,6 +27,16 @@ function App() {
     await sleep(2)
     setCount(c => c +1)
   }
+  checkDeliverFirstLoginStatus2();
+
+  React.useEffect(() => {
+    const init = async () => {
+      const data = await checkDeliverFirstLoginStatus();
+      console.log('-----data', data)
+    }
+
+    init();
+  }, [])
 
   return (
     <div>
