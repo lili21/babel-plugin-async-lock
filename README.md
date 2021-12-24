@@ -14,11 +14,13 @@ npm i babel-plugin-async-lock
 // your babel config
 module.exports = {
   plugins: [
-    'babel-plugin-async-lock',
-    {
-      exclude: 'node_modules',
-      extensions: ['.jsx', '.tsx']
-    }
+    [
+      'babel-plugin-async-lock',
+      {
+        exclude: 'node_modules',
+        extensions: ['.jsx', '.tsx']
+      }
+    ]
   ]
 }
 ```
